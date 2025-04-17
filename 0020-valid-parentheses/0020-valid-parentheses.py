@@ -1,16 +1,27 @@
 class Solution:
     def isValid(self, s: str) -> bool:
-        character = {')':'(', '}':'{', ']':'['}
-        
-        stack = []
-        for char in s:
-            if char in character:
-                top = stack.pop() if stack else '#'
-                if character[char] != top:
-                    return False
+        ch_dict = {
+            "(" : ")",
+            "{" : "}",
+            "[" : "]"
+        }
+
+        if s[0] in ch_dict.values():
+            return False
+
+        basket = []
+
+        for sc in s:
+            if sc in ch_dict.values():
+                if ch_dict[basket[-1]] == sc:
+                    basket.pop()
+                else:
+                    basket.append(sc)
             else:
-                stack.append(char)
-        
-        return not stack
-            
+                basket.append(sc)
+
+        if len(basket) == 0:
+            return True
+        else:
+            return False
 
